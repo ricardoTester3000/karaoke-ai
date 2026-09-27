@@ -1,0 +1,509 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Karaokê AI</title>
+<script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+<script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+<script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+<style>
+*{box-sizing:border-box;}
+.absolute{position:absolute;} .relative{position:relative;} .inset-0{top:0;right:0;bottom:0;left:0;}
+.pointer-events-none{pointer-events:none;} .overflow-hidden{overflow:hidden;} .overflow-x-hidden{overflow-x:hidden;} .overflow-y-auto{overflow-y:auto;}
+.z-10{z-index:10;} .top-1\/3{top:33.3333%;} .-top-40{top:-10rem;} .-left-40{left:-10rem;} .-right-32{right:-8rem;}
+.flex{display:flex;} .inline-flex{display:inline-flex;} .inline-block{display:inline-block;} .grid{display:grid;} .hidden{display:none;}
+.flex-1{flex:1 1 0%;} .flex-col{flex-direction:column;} .flex-wrap{flex-wrap:wrap;} .shrink-0{flex-shrink:0;}
+.items-center{align-items:center;} .items-start{align-items:flex-start;} .items-end{align-items:flex-end;}
+.justify-between{justify-content:space-between;} .justify-center{justify-content:center;}
+.min-w-0{min-width:0;} .min-h-screen{min-height:100vh;} .min-h-\[132px\]{min-height:132px;}
+.max-h-\[520px\]{max-height:520px;} .max-w-full{max-width:100%;} .max-w-6xl{max-width:72rem;} .max-w-md{max-width:28rem;}
+.max-w-sm{max-width:24rem;} .max-w-xl{max-width:36rem;} .max-w-xs{max-width:20rem;}
+.w-full{width:100%;} .w-1\.5{width:.375rem;} .w-6{width:1.5rem;} .w-9{width:2.25rem;} .w-14{width:3.5rem;} .w-96{width:24rem;}
+.h-full{height:100%;} .h-1\.5{height:.375rem;} .h-6{height:1.5rem;} .h-8{height:2rem;} .h-9{height:2.25rem;} .h-10{height:2.5rem;} .h-96{height:24rem;}
+.gap-1{gap:.25rem;} .gap-1\.5{gap:.375rem;} .gap-2{gap:.5rem;} .gap-2\.5{gap:.625rem;} .gap-3{gap:.75rem;} .gap-4{gap:1rem;} .gap-8{gap:2rem;}
+.p-2{padding:.5rem;} .p-3{padding:.75rem;} .p-5{padding:1.25rem;}
+.px-1{padding-left:.25rem;padding-right:.25rem;} .px-2{padding-left:.5rem;padding-right:.5rem;} .px-3{padding-left:.75rem;padding-right:.75rem;}
+.px-4{padding-left:1rem;padding-right:1rem;} .px-5{padding-left:1.25rem;padding-right:1.25rem;} .px-6{padding-left:1.5rem;padding-right:1.5rem;}
+.py-2{padding-top:.5rem;padding-bottom:.5rem;} .py-3{padding-top:.75rem;padding-bottom:.75rem;} .py-3\.5{padding-top:.875rem;padding-bottom:.875rem;} .py-2\.5{padding-top:.625rem;padding-bottom:.625rem;}
+.py-6{padding-top:1.5rem;padding-bottom:1.5rem;} .py-20{padding-top:5rem;padding-bottom:5rem;}
+.pb-8{padding-bottom:2rem;} .pb-10{padding-bottom:2.5rem;} .pb-24{padding-bottom:6rem;} .pt-4{padding-top:1rem;}
+.pr-1{padding-right:.25rem;} .pr-4{padding-right:1rem;} .pl-3{padding-left:.75rem;}
+.mb-1{margin-bottom:.25rem;} .mb-2{margin-bottom:.5rem;} .mb-3{margin-bottom:.75rem;} .mb-4{margin-bottom:1rem;} .mb-8{margin-bottom:2rem;}
+.mt-1{margin-top:.25rem;} .mt-3{margin-top:.75rem;} .mt-4{margin-top:1rem;} .mx-auto{margin-left:auto;margin-right:auto;}
+.rounded-lg{border-radius:.5rem;} .rounded-xl{border-radius:.75rem;} .rounded-2xl{border-radius:1rem;} .rounded-3xl{border-radius:1.5rem;} .rounded-full{border-radius:9999px;}
+.border{border-width:1px;border-style:solid;border-color:#333;} .border-dashed{border-style:dashed;}
+.text-black{color:#000;} .text-neutral-100{color:#f2f0f5;} .text-neutral-200{color:#e5e5e5;} .text-neutral-300{color:#d4d4d4;}
+.text-neutral-400{color:#a3a3a3;} .text-neutral-500{color:#737373;} .text-neutral-600{color:#525252;}
+.text-transparent{color:transparent;} .bg-transparent{background-color:transparent;} .bg-clip-text{-webkit-background-clip:text;background-clip:text;}
+.text-xs{font-size:.75rem;line-height:1rem;} .text-sm{font-size:.875rem;line-height:1.25rem;} .text-base{font-size:1rem;line-height:1.5rem;}
+.text-lg{font-size:1.125rem;line-height:1.75rem;} .text-2xl{font-size:1.5rem;line-height:2rem;} .text-4xl{font-size:2.25rem;line-height:2.5rem;}
+.text-6xl{font-size:3.75rem;line-height:1;} .text-\[10px\]{font-size:10px;} .text-\[11px\]{font-size:11px;}
+.font-semibold{font-weight:600;} .font-extrabold{font-weight:800;}
+.uppercase{text-transform:uppercase;} .tracking-wide{letter-spacing:.025em;} .tracking-wider{letter-spacing:.05em;} .tracking-widest{letter-spacing:.1em;}
+.leading-relaxed{line-height:1.625;} .leading-snug{line-height:1.375;}
+.text-center{text-align:center;} .text-left{text-align:left;} .truncate{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+.whitespace-pre-wrap{white-space:pre-wrap;} .whitespace-nowrap{white-space:nowrap;}
+.opacity-20{opacity:.2;} .opacity-30{opacity:.3;} .opacity-40{opacity:.4;}
+.outline-none{outline:none;} .object-cover{object-fit:cover;} .blur-3xl{filter:blur(64px);}
+.transition-colors{transition:color .15s,background-color .15s,border-color .15s;} .transition-transform{transition:transform .15s;}
+.bg-white\/5{background-color:rgba(255,255,255,.05);}
+a:hover.hover\:text-neutral-300:hover,.hover\:text-neutral-300:hover{color:#d4d4d4;}
+.hover\:bg-white\/5:hover{background-color:rgba(255,255,255,.05);}
+.hover\:scale-\[1\.02\]:hover{transform:scale(1.02);}
+.active\:scale-\[0\.98\]:active{transform:scale(.98);}
+@media(min-width:640px){ .sm\:flex{display:flex;} .sm\:flex-row{flex-direction:row;} }
+@media(min-width:768px){ .md\:p-4{padding:1rem;} .md\:px-8{padding-left:2rem;padding-right:2rem;} .md\:px-10{padding-left:2.5rem;padding-right:2.5rem;}
+  .md\:py-8{padding-top:2rem;padding-bottom:2rem;} .md\:text-6xl{font-size:3.75rem;line-height:1;} .md\:text-base{font-size:1rem;line-height:1.5rem;} .md\:text-lg{font-size:1.125rem;line-height:1.75rem;} }
+@media(min-width:1024px){ .lg\:grid-cols-\[1fr_320px\]{grid-template-columns:1fr 320px;} }
+</style>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+</head>
+<body>
+<div id="root"></div>
+<script type="text/babel" data-presets="react">
+const { useState, useEffect, useRef, useCallback } = React;
+
+/* ---------------- design tokens ---------------- */
+const INK="#0a0a0f", PANEL="#131218", PANEL_SOFT="#1a1822";
+const GOLD="#f5b942", GOLD_SOFT="#ffd98a", MAGENTA="#ff3d8a";
+const GRADIENT=`linear-gradient(90deg, ${GOLD} 0%, ${GOLD_SOFT} 45%, ${MAGENTA} 100%)`;
+const HISTORY_KEY="karaoke_ai_history_v1", MAX_HISTORY=8;
+
+/* ---------------- ícones (SVG inline, sem dependência de pacote) ---------------- */
+function Icon({d,size=16,className,style,strokeWidth=2,fill="none"}){
+  return <svg width={size} height={size} viewBox="0 0 24 24" fill={fill} stroke="currentColor"
+    strokeWidth={strokeWidth} strokeLinecap="round" strokeLinejoin="round" className={className} style={style}
+    dangerouslySetInnerHTML={{__html:d}} />;
+}
+const I = {
+  music:p=><Icon {...p} d='<path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/>'/>,
+  youtube:p=><Icon {...p} d='<path d="M22 8.5s-.2-1.6-.8-2.3c-.8-.9-1.7-.9-2.1-1C16.3 5 12 5 12 5h0s-4.3 0-7.1.2c-.4.1-1.3.1-2.1 1C2.2 6.9 2 8.5 2 8.5S1.8 10.4 1.8 12.3v1.8C1.8 16 2 17.9 2 17.9s.2 1.6.8 2.3c.8.9 1.9.9 2.4 1C7 21.4 12 21.4 12 21.4s4.3 0 7.1-.2c.4-.1 1.3-.1 2.1-1 .6-.7.8-2.3.8-2.3s.2-1.9.2-3.8v-1.8C22.2 10.4 22 8.5 22 8.5z"/><path d="M9.8 15.5V9.2l5.5 3.1z" fill="currentColor"/>'/>,
+  play:p=><Icon {...p} fill="currentColor" d='<path d="M6 3l15 9-15 9V3z"/>'/>,
+  mic:p=><Icon {...p} d='<path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="23"/>'/>,
+  micOff:p=><Icon {...p} d='<line x1="2" y1="2" x2="22" y2="22"/><path d="M9 9v3a3 3 0 0 0 4.7 2.5M15 9V4a3 3 0 0 0-5.9-.7"/><path d="M19 10v2a7 7 0 0 1-9.9 6.4M5 10v2a7 7 0 0 0 1.2 3.9"/><line x1="12" y1="19" x2="12" y2="23"/>'/>,
+  history:p=><Icon {...p} d='<path d="M3 12a9 9 0 1 0 3-6.7"/><polyline points="3 4 3 9 8 9"/><polyline points="12 7 12 12 15 14"/>'/>,
+  loader:p=><Icon {...p} d='<line x1="12" y1="2" x2="12" y2="6"/><line x1="12" y1="18" x2="12" y2="22"/><line x1="4.9" y1="4.9" x2="7.8" y2="7.8"/><line x1="16.2" y1="16.2" x2="19.1" y2="19.1"/><line x1="2" y1="12" x2="6" y2="12"/><line x1="18" y1="12" x2="22" y2="12"/><line x1="4.9" y1="19.1" x2="7.8" y2="16.2"/><line x1="16.2" y1="7.8" x2="19.1" y2="4.9"/>'/>,
+  alert:p=><Icon {...p} d='<path d="M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/>'/>,
+  trash:p=><Icon {...p} d='<polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/><path d="M10 11v6M14 11v6"/>'/>,
+  sparkles:p=><Icon {...p} fill="currentColor" d='<path d="M12 2l1.8 5.2L19 9l-5.2 1.8L12 16l-1.8-5.2L5 9l5.2-1.8z"/>'/>,
+  pause:p=><Icon {...p} fill="currentColor" d='<rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/>'/>,
+  radio:p=><Icon {...p} d='<circle cx="12" cy="12" r="2"/><path d="M16.2 7.8a6 6 0 0 1 0 8.4M7.8 7.8a6 6 0 0 0 0 8.4M19 5a10 10 0 0 1 0 14M5 5a10 10 0 0 0 0 14"/>'/>,
+};
+
+/* ---------------- helpers ---------------- */
+function extractVideoId(raw){
+  if(!raw) return null;
+  const url=raw.trim();
+  const m=url.match(/(?:youtube\.com\/watch\?v=|youtube\.com\/embed\/|youtu\.be\/|youtube\.com\/shorts\/)([a-zA-Z0-9_-]{11})/);
+  if(m) return m[1];
+  if(/^[a-zA-Z0-9_-]{11}$/.test(url)) return url;
+  return null;
+}
+function cleanTitle(title){
+  if(!title) return "";
+  let t=title;
+  const noise=[/\(\s*official\s*(music\s*)?video\s*\)/gi,/\[\s*official\s*(music\s*)?video\s*\]/gi,
+    /\(\s*official\s*audio\s*\)/gi,/\[\s*official\s*audio\s*\]/gi,/\(\s*official\s*\)/gi,/\[\s*official\s*\]/gi,
+    /\(\s*lyrics?\s*video\s*\)/gi,/\[\s*lyrics?\s*video\s*\]/gi,/\(\s*lyrics?\s*\)/gi,/\[\s*lyrics?\s*\]/gi,
+    /\(\s*letra\s*\)/gi,/\[\s*letra\s*\]/gi,/\(\s*legendado\s*\)/gi,/\[\s*legendado\s*\]/gi,
+    /\(\s*clipe\s*oficial\s*\)/gi,/\[\s*clipe\s*oficial\s*\]/gi,/\(\s*[aá]udio\s*oficial\s*\)/gi,
+    /\[\s*[aá]udio\s*oficial\s*\]/gi,/\(\s*video\s*oficial\s*\)/gi,/\[\s*video\s*oficial\s*\]/gi,
+    /\(\s*hd\s*\)/gi,/\[\s*hd\s*\]/gi,/\(\s*4k\s*\)/gi,/\[\s*4k\s*\]/gi,/\(\s*hq\s*\)/gi,/\[\s*hq\s*\]/gi,
+    /\bofficial\s*(music\s*)?video\b/gi,/\bofficial\s*audio\b/gi,/\blyrics?\s*video\b/gi,/\bm\/?v\b/gi,
+    /\bhd\b/gi,/\b4k\b/gi,/\bhq\b/gi];
+  noise.forEach(p=>{t=t.replace(p,"");});
+  t=t.replace(/[-–—|]\s*$/g,"").replace(/^[-–—|]\s*/g,"").replace(/\s{2,}/g," ").trim();
+  return t;
+}
+function parseLRC(lrcText){
+  if(!lrcText) return [];
+  const timeExp=/\[(\d{2}):(\d{2})(?:[.:](\d{2,3}))?\]/g;
+  const result=[];
+  for(const rawLine of lrcText.split("\n")){
+    const matches=[...rawLine.matchAll(timeExp)];
+    if(!matches.length) continue;
+    const text=rawLine.replace(timeExp,"").trim();
+    for(const m of matches){
+      const ms=m[3]?parseInt(m[3].padEnd(3,"0"),10):0;
+      result.push({time:parseInt(m[1],10)*60+parseInt(m[2],10)+ms/1000, text});
+    }
+  }
+  result.sort((a,b)=>a.time-b.time);
+  return result.filter(l=>l.text.length>0 || result.length<3);
+}
+function getCurrentLineIndex(lyrics,t){
+  if(!lyrics||!lyrics.length) return -1;
+  let idx=-1;
+  for(let i=0;i<lyrics.length;i++){ if(lyrics[i].time<=t) idx=i; else break; }
+  return idx;
+}
+function loadHistory(){ try{ const r=localStorage.getItem(HISTORY_KEY); return r?JSON.parse(r):[]; }catch{ return []; } }
+function saveHistory(list){ try{ localStorage.setItem(HISTORY_KEY, JSON.stringify(list)); }catch{} }
+
+let ytApiPromise=null;
+function loadYouTubeAPI(){
+  if(window.YT && window.YT.Player) return Promise.resolve(window.YT);
+  if(ytApiPromise) return ytApiPromise;
+  ytApiPromise=new Promise(resolve=>{
+    const prev=window.onYouTubeIframeAPIReady;
+    window.onYouTubeIframeAPIReady=()=>{ if(typeof prev==="function") prev(); resolve(window.YT); };
+    const tag=document.createElement("script");
+    tag.src="https://www.youtube.com/iframe_api";
+    document.body.appendChild(tag);
+  });
+  return ytApiPromise;
+}
+
+/* busca de letra sincronizada — LRCLIB é público e libera CORS, funciona direto do navegador */
+async function searchLyrics(query){
+  const res=await fetch(`https://lrclib.net/api/search?q=${encodeURIComponent(query)}`);
+  if(!res.ok) throw new Error("network");
+  const data=await res.json();
+  const found=Array.isArray(data) && data.find(d=>d.syncedLyrics);
+  return found ? parseLRC(found.syncedLyrics) : [];
+}
+
+function KaraokeLine({text,progress,size}){
+  const cls = size==="lg" ? "text-2xl md:text-4xl font-extrabold leading-snug" : "text-base md:text-lg font-semibold leading-snug";
+  return (
+    <div className="relative inline-block max-w-full">
+      <span className={`${cls} text-neutral-600 whitespace-pre-wrap`}>{text||"\u00A0"}</span>
+      <span className={`${cls} absolute inset-0 overflow-hidden whitespace-nowrap text-transparent bg-clip-text`}
+        style={{width:`${Math.max(0,Math.min(1,progress))*100}%`, backgroundImage:GRADIENT, textShadow:"0 0 18px rgba(245,185,66,0.35)"}}>
+        {text||"\u00A0"}
+      </span>
+    </div>
+  );
+}
+
+function App(){
+  const [inputUrl,setInputUrl]=useState("");
+  const [inputError,setInputError]=useState(null);
+  const [videoId,setVideoId]=useState(null);
+  const [videoLoading,setVideoLoading]=useState(false);
+  const [videoError,setVideoError]=useState(false);
+  const [playerState,setPlayerState]=useState(-1);
+  const [songTitle,setSongTitle]=useState("");
+  const [lyrics,setLyrics]=useState(null);
+  const [lyricsStatus,setLyricsStatus]=useState("idle");
+  const [currentTime,setCurrentTime]=useState(0);
+  const [history,setHistory]=useState([]);
+  const [micActive,setMicActive]=useState(false);
+  const [micError,setMicError]=useState(null);
+  const [micLoading,setMicLoading]=useState(false);
+  const [manualArtist,setManualArtist]=useState("");
+  const [manualTrack,setManualTrack]=useState("");
+
+  const playerRef=useRef(null), intervalRef=useRef(null);
+  const titleAttemptsRef=useRef(0), fetchedTitleRef=useRef("");
+  const audioCtxRef=useRef(null), analyserRef=useRef(null), micStreamRef=useRef(null);
+  const rafRef=useRef(null), barRefs=useRef([]);
+
+  useEffect(()=>{ setHistory(loadHistory()); },[]);
+  const addToHistory=useCallback(entry=>{
+    setHistory(prev=>{ const next=[entry,...prev.filter(h=>h.id!==entry.id)].slice(0,MAX_HISTORY); saveHistory(next); return next; });
+  },[]);
+  const updateHistoryTitle=useCallback((id,title)=>{
+    setHistory(prev=>{ const next=prev.map(h=>h.id===id?{...h,title}:h); saveHistory(next); return next; });
+  },[]);
+  const clearHistory=()=>{ setHistory([]); saveHistory([]); };
+
+  const stopPolling=useCallback(()=>{ if(intervalRef.current){ clearInterval(intervalRef.current); intervalRef.current=null; } },[]);
+  const startPolling=useCallback(()=>{
+    stopPolling();
+    intervalRef.current=setInterval(()=>{
+      const p=playerRef.current;
+      if(p && typeof p.getCurrentTime==="function") setCurrentTime(p.getCurrentTime());
+    },150);
+  },[stopPolling]);
+
+  const fetchLyrics=useCallback(async(rawTitle,id)=>{
+    setLyricsStatus("loading");
+    const cleaned=cleanTitle(rawTitle)||rawTitle;
+    setSongTitle(cleaned);
+    updateHistoryTitle(id,cleaned);
+    let artist="", track=cleaned;
+    if(cleaned.includes(" - ")){ const parts=cleaned.split(" - "); artist=parts[0].trim(); track=parts.slice(1).join(" - ").trim(); }
+    try{
+      const parsed=await searchLyrics(artist?`${artist} ${track}`:track);
+      if(parsed.length>0){ setLyrics(parsed); setLyricsStatus("found"); } else { setLyrics(null); setLyricsStatus("not-found"); }
+    }catch{ setLyrics(null); setLyricsStatus("error"); }
+  },[updateHistoryTitle]);
+
+  const retryManual=()=>{
+    if(!manualArtist && !manualTrack) return;
+    fetchLyrics(`${manualArtist} - ${manualTrack}`, videoId);
+  };
+
+  const captureTitleAndFetchLyrics=useCallback(id=>{
+    titleAttemptsRef.current=0;
+    const tryCapture=()=>{
+      const p=playerRef.current;
+      const data=p && typeof p.getVideoData==="function" ? p.getVideoData() : null;
+      const title=data && data.title ? data.title : "";
+      titleAttemptsRef.current+=1;
+      if(title){ fetchedTitleRef.current=title; fetchLyrics(title,id); }
+      else if(titleAttemptsRef.current<12) setTimeout(tryCapture,350);
+      else setLyricsStatus("error");
+    };
+    tryCapture();
+  },[fetchLyrics]);
+
+  useEffect(()=>{
+    if(!videoId) return;
+    let cancelled=false;
+    setVideoLoading(true); setVideoError(false); setLyrics(null); setLyricsStatus("idle");
+    fetchedTitleRef.current=""; setManualArtist(""); setManualTrack(""); stopPolling();
+    loadYouTubeAPI().then(YT=>{
+      if(cancelled||!YT) return;
+      const onReady=()=>{ setVideoLoading(false); captureTitleAndFetchLyrics(videoId); };
+      const onStateChange=e=>{
+        setPlayerState(e.data);
+        if(e.data===YT.PlayerState.PLAYING){ startPolling(); if(!fetchedTitleRef.current) captureTitleAndFetchLyrics(videoId); }
+        else stopPolling();
+      };
+      const onError=()=>{ setVideoLoading(false); setVideoError(true); };
+      if(playerRef.current && typeof playerRef.current.loadVideoById==="function"){
+        playerRef.current.loadVideoById(videoId);
+      } else {
+        playerRef.current=new YT.Player("yt-player-mount",{
+          videoId, playerVars:{autoplay:1,rel:0,modestbranding:1,playsinline:1},
+          events:{onReady,onStateChange,onError}
+        });
+      }
+    });
+    return ()=>{ cancelled=true; stopPolling(); };
+    // eslint-disable-next-line
+  },[videoId]);
+
+  useEffect(()=>()=>{ stopPolling(); stopMic(); },[]);
+
+  const runVUMeter=()=>{
+    const analyser=analyserRef.current;
+    if(!analyser) return;
+    const data=new Uint8Array(analyser.frequencyBinCount);
+    analyser.getByteFrequencyData(data);
+    const bars=barRefs.current;
+    const chunk=Math.max(1,Math.floor(data.length/bars.length));
+    for(let i=0;i<bars.length;i++){
+      let sum=0; for(let j=0;j<chunk;j++) sum+=data[i*chunk+j]||0;
+      const h=Math.max(10,Math.min(100,(sum/chunk/255)*100));
+      if(bars[i]) bars[i].style.height=`${h}%`;
+    }
+    rafRef.current=requestAnimationFrame(runVUMeter);
+  };
+  const startMic=async()=>{
+    setMicError(null); setMicLoading(true);
+    try{
+      const stream=await navigator.mediaDevices.getUserMedia({audio:true});
+      const AudioCtx=window.AudioContext||window.webkitAudioContext;
+      const audioCtx=new AudioCtx();
+      const source=audioCtx.createMediaStreamSource(stream);
+      const analyser=audioCtx.createAnalyser();
+      analyser.fftSize=256; analyser.smoothingTimeConstant=0.8;
+      source.connect(analyser);
+      // Nota: o analyser NÃO é conectado a audioCtx.destination — só serve para o medidor visual,
+      // assim o microfone nunca é reproduzido de volta nas caixas (evita microfonia/feedback).
+      micStreamRef.current=stream; audioCtxRef.current=audioCtx; analyserRef.current=analyser;
+      setMicActive(true); setMicLoading(false); runVUMeter();
+    }catch(err){ setMicLoading(false); setMicError("Não foi possível acessar o microfone. Verifique as permissões."); }
+  };
+  function stopMic(){
+    if(rafRef.current){ cancelAnimationFrame(rafRef.current); rafRef.current=null; }
+    if(micStreamRef.current){ micStreamRef.current.getTracks().forEach(t=>t.stop()); micStreamRef.current=null; }
+    if(audioCtxRef.current){ audioCtxRef.current.close().catch(()=>{}); audioCtxRef.current=null; }
+    analyserRef.current=null;
+    barRefs.current.forEach(b=>{ if(b) b.style.height="10%"; });
+    setMicActive(false);
+  }
+  const toggleMic=()=>{ if(micActive) stopMic(); else startMic(); };
+
+  const handleStart=e=>{
+    e?.preventDefault?.();
+    const id=extractVideoId(inputUrl);
+    if(!id){ setInputError("Cole um link válido do YouTube."); return; }
+    setInputError(null); setVideoId(id);
+    addToHistory({id,url:inputUrl.trim(),title:null,addedAt:Date.now()});
+    setInputUrl("");
+  };
+  const openFromHistory=item=>{ setInputError(null); setInputUrl(""); setVideoId(item.id); addToHistory({...item,addedAt:Date.now()}); };
+
+  const lineIndex=getCurrentLineIndex(lyrics,currentTime);
+  const currentLine=lineIndex>=0?lyrics[lineIndex]:null;
+  const nextLine=lyrics && lineIndex+1<lyrics.length ? lyrics[lineIndex+1] : null;
+  const lineStart=currentLine?currentLine.time:0;
+  const lineEnd=nextLine?nextLine.time:lineStart+4;
+  const progress=currentLine ? (currentTime-lineStart)/Math.max(0.5,lineEnd-lineStart) : 0;
+  const isPlaying=playerState===1;
+
+  return (
+    <div className="min-h-screen w-full relative overflow-x-hidden" style={{backgroundColor:INK,color:"#f2f0f5"}}>
+      <style>{`
+        @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Manrope:wght@400;500;600;700;800&display=swap');
+        .font-display{font-family:'Bebas Neue','Manrope',sans-serif;letter-spacing:.04em;}
+        .font-body{font-family:'Manrope',sans-serif;}
+        @keyframes bulbGlow{0%,100%{opacity:1;transform:scale(1);}50%{opacity:.25;transform:scale(.85);}}
+        .bulb{animation:bulbGlow 1.6s ease-in-out infinite;}
+        @keyframes ringPulse{0%{box-shadow:0 0 0 0 rgba(255,61,138,.45);}70%{box-shadow:0 0 0 14px rgba(255,61,138,0);}100%{box-shadow:0 0 0 0 rgba(255,61,138,0);}}
+        .mic-ring{animation:ringPulse 1.8s ease-out infinite;}
+        .vu-bar{transition:height 90ms ease-out;}
+        input::placeholder{color:#6b6878;}
+        .spin{animation:spin 1s linear infinite;} @keyframes spin{to{transform:rotate(360deg);}}
+      `}</style>
+
+      <div className="pointer-events-none absolute -top-40 -left-40 w-96 h-96 rounded-full blur-3xl opacity-30" style={{backgroundColor:GOLD}}/>
+      <div className="pointer-events-none absolute top-1/3 -right-32 w-96 h-96 rounded-full blur-3xl opacity-20" style={{backgroundColor:MAGENTA}}/>
+
+      <header className="relative z-10 flex items-center justify-between px-5 md:px-10 py-6">
+        <div className="flex items-center gap-2.5">
+          <div className="w-9 h-9 rounded-xl flex items-center justify-center" style={{backgroundImage:GRADIENT}}>
+            <I.music size={18} className="text-black" strokeWidth={2.5}/>
+          </div>
+          <span className="font-display text-2xl tracking-wider" style={{color:"#f5f3fa"}}>KARAOKÊ<span style={{color:GOLD}}>AI</span></span>
+        </div>
+        <div className="hidden sm:flex items-center gap-1.5 text-xs text-neutral-500 font-body">
+          <I.sparkles size={13} style={{color:GOLD}}/> letras sincronizadas em tempo real
+        </div>
+      </header>
+
+      <main className="relative z-10 max-w-6xl mx-auto px-5 md:px-10 pb-24">
+        <section className="text-center pt-4 pb-10">
+          <h1 className="font-display text-4xl md:text-6xl tracking-wide mb-3">Solte a <span style={{color:GOLD}}>voz.</span></h1>
+          <p className="font-body text-neutral-400 text-sm md:text-base mb-8 max-w-md mx-auto">
+            Cole a URL de um vídeo do YouTube e a letra sincronizada aparece automaticamente no palco.
+          </p>
+          <form onSubmit={handleStart} className="max-w-xl mx-auto flex flex-col sm:flex-row gap-3">
+            <div className="flex-1 flex items-center gap-3 rounded-2xl px-4 py-3.5 border" style={{backgroundColor:PANEL,borderColor:"#252231"}}>
+              <I.youtube size={20} className="text-neutral-500 shrink-0"/>
+              <input value={inputUrl} onChange={ev=>setInputUrl(ev.target.value)} placeholder="https://youtube.com/watch?v=..."
+                className="bg-transparent outline-none w-full text-sm md:text-base font-body text-neutral-100"/>
+            </div>
+            <button type="submit" className="rounded-2xl px-6 py-3.5 font-display text-lg tracking-wide flex items-center justify-center gap-2 text-black shrink-0 transition-transform hover:scale-[1.02] active:scale-[0.98]" style={{backgroundImage:GRADIENT}}>
+              <I.play size={18}/> Iniciar Karaokê
+            </button>
+          </form>
+          {inputError && <p className="text-sm mt-3 font-body flex items-center justify-center gap-1.5" style={{color:MAGENTA}}><I.alert size={14}/>{inputError}</p>}
+        </section>
+
+        <div className="grid lg:grid-cols-[1fr_320px] gap-8 items-start">
+          <div>
+            {!videoId ? (
+              <div className="rounded-3xl border border-dashed flex flex-col items-center justify-center text-center py-20 px-6" style={{borderColor:"#2a2733",backgroundColor:"#111017"}}>
+                <I.radio size={34} className="text-neutral-600 mb-3"/>
+                <p className="font-body text-neutral-500 text-sm max-w-xs">Nenhuma música carregada ainda. Cole um link acima para acender o palco.</p>
+              </div>
+            ) : (
+              <div className="rounded-3xl p-3 md:p-4 relative" style={{backgroundColor:PANEL,border:"2px solid #2a2733"}}>
+                <div className="flex justify-between px-2 mb-3">
+                  {Array.from({length:14}).map((_,i)=>(
+                    <span key={i} className="w-1.5 h-1.5 rounded-full bulb" style={{backgroundColor:i%2===0?GOLD:MAGENTA,animationDelay:`${i*0.09}s`}}/>
+                  ))}
+                </div>
+
+                <div className="relative w-full rounded-2xl overflow-hidden" style={{backgroundColor:"#000",aspectRatio:"16 / 9"}}>
+                  <div id="yt-player-mount" className="w-full h-full"/>
+                  {videoLoading && (
+                    <div className="absolute inset-0 flex flex-col items-center justify-center gap-3" style={{backgroundColor:"rgba(10,10,15,0.85)"}}>
+                      <I.loader size={28} className="spin" style={{color:GOLD}}/>
+                      <span className="font-body text-sm text-neutral-400">Carregando vídeo…</span>
+                    </div>
+                  )}
+                  {videoError && (
+                    <div className="absolute inset-0 flex flex-col items-center justify-center gap-2 px-6 text-center" style={{backgroundColor:"rgba(10,10,15,0.92)"}}>
+                      <I.alert size={26} style={{color:MAGENTA}}/>
+                      <span className="font-body text-sm text-neutral-300">Não foi possível carregar este vídeo. Verifique o link.</span>
+                    </div>
+                  )}
+                </div>
+
+                <div className="mt-4 rounded-2xl px-5 md:px-8 py-6 md:py-8 min-h-[132px] flex flex-col items-center justify-center text-center gap-2" style={{backgroundColor:PANEL_SOFT}}>
+                  {songTitle && (
+                    <p className="font-body text-[11px] uppercase tracking-widest text-neutral-500 mb-1">
+                      {isPlaying ? <span className="inline-flex items-center gap-1.5"><I.play size={10}/> tocando agora</span>
+                                  : <span className="inline-flex items-center gap-1.5"><I.pause size={10}/> em pausa</span>}
+                      {" · "}{songTitle}
+                    </p>
+                  )}
+                  {lyricsStatus==="loading" && (
+                    <div className="flex items-center gap-2 text-neutral-400 font-body text-sm py-3"><I.loader size={16} className="spin"/>Buscando letra sincronizada…</div>
+                  )}
+                  {lyricsStatus==="found" && (
+                    <>
+                      <KaraokeLine text={currentLine?currentLine.text:"♪"} progress={currentLine?progress:0} size="lg"/>
+                      <div className="opacity-40 mt-1"><KaraokeLine text={nextLine?nextLine.text:""} progress={0} size="sm"/></div>
+                    </>
+                  )}
+                  {(lyricsStatus==="not-found"||lyricsStatus==="error") && (
+                    <div className="flex flex-col items-center gap-2 py-2 text-center w-full max-w-sm">
+                      <I.alert size={20} style={{color:GOLD}}/>
+                      <p className="font-body text-sm text-neutral-300">Letra sincronizada não encontrada automaticamente.</p>
+                      <p className="font-body text-xs text-neutral-500 mb-2">A reprodução continua normalmente. Tente informar artista e música:</p>
+                      <div className="flex flex-col sm:flex-row gap-2 w-full">
+                        <input value={manualArtist} onChange={e=>setManualArtist(e.target.value)} placeholder="Artista"
+                          className="flex-1 bg-transparent border rounded-lg px-3 py-2 text-sm font-body text-neutral-100" style={{borderColor:"#2f2c3a"}}/>
+                        <input value={manualTrack} onChange={e=>setManualTrack(e.target.value)} placeholder="Música"
+                          className="flex-1 bg-transparent border rounded-lg px-3 py-2 text-sm font-body text-neutral-100" style={{borderColor:"#2f2c3a"}}/>
+                        <button onClick={retryManual} className="rounded-lg px-4 py-2 text-sm font-semibold text-black" style={{backgroundImage:GRADIENT}}>Buscar</button>
+                      </div>
+                    </div>
+                  )}
+                  {lyricsStatus==="idle" && !videoLoading && <p className="font-body text-sm text-neutral-500">Aguardando início da reprodução…</p>}
+                </div>
+
+                <div className="mt-4 flex items-center gap-4 px-1 flex-wrap">
+                  <button onClick={toggleMic} disabled={micLoading}
+                    className={`relative flex items-center gap-2 rounded-full pl-3 pr-4 py-2.5 font-body text-sm font-semibold transition-colors ${micActive?"text-black":"text-neutral-200"}`}
+                    style={{backgroundColor:micActive?MAGENTA:"#211f29", border:micActive?"none":"1px solid #2f2c3a"}}>
+                    <span className={`flex items-center justify-center w-6 h-6 rounded-full ${micActive?"mic-ring":""}`}>
+                      {micLoading ? <I.loader size={16} className="spin"/> : micActive ? <I.mic size={16}/> : <I.micOff size={16}/>}
+                    </span>
+                    {micActive ? "Microfone ativo" : "Ativar Microfone"}
+                  </button>
+                  <div className="flex items-end gap-1 h-8">
+                    {Array.from({length:9}).map((_,i)=>(
+                      <div key={i} ref={el=>barRefs.current[i]=el} className="vu-bar w-1.5 rounded-full"
+                        style={{height:"10%",backgroundImage:GRADIENT,opacity:micActive?1:.25}}/>
+                    ))}
+                  </div>
+                  {micError && <span className="text-xs font-body flex items-center gap-1" style={{color:MAGENTA}}><I.alert size={12}/>{micError}</span>}
+                  {micActive && !micError && <span className="text-xs font-body text-neutral-500">Medidor visual só — o áudio do mic não vai pras caixas.</span>}
+                </div>
+              </div>
+            )}
+          </div>
+
+          <aside className="rounded-3xl p-5 border" style={{backgroundColor:PANEL,borderColor:"#221f2b"}}>
+            <div className="flex items-center justify-between mb-4">
+              <div className="flex items-center gap-2"><I.history size={16} style={{color:GOLD}}/><h2 className="font-display text-lg tracking-wide">Histórico</h2></div>
+              {history.length>0 && <button onClick={clearHistory} className="text-neutral-500 hover:text-neutral-300 transition-colors" title="Limpar histórico"><I.trash size={15}/></button>}
+            </div>
+            {history.length===0 ? (
+              <p className="font-body text-xs text-neutral-500 leading-relaxed">As músicas que você pesquisar aparecerão aqui, salvas neste navegador.</p>
+            ) : (
+              <ul className="flex flex-col gap-2 max-h-[520px] overflow-y-auto pr-1">
+                {history.map(item=>(
+                  <li key={`${item.id}-${item.addedAt}`}>
+                    <button onClick={()=>openFromHistory(item)} className={`w-full flex items-center gap-3 rounded-xl p-2 text-left transition-colors hover:bg-white/5 ${videoId===item.id?"bg-white/5":""}`}>
+                      <img src={`https://img.youtube.com/vi/${item.id}/mqdefault.jpg`} alt="" className="w-14 h-10 object-cover rounded-lg shrink-0" style={{backgroundColor:"#000"}}/>
+                      <div className="min-w-0">
+                        <p className="font-body text-xs font-semibold text-neutral-200 truncate">{item.title||"Carregando título…"}</p>
+                        <p className="font-body text-[10px] text-neutral-500">{new Date(item.addedAt).toLocaleDateString("pt-BR",{day:"2-digit",month:"2-digit",hour:"2-digit",minute:"2-digit"})}</p>
+                      </div>
+                    </button>
+                  </li>
+                ))}
+              </ul>
+            )}
+          </aside>
+        </div>
+      </main>
+      <footer className="relative z-10 text-center pb-8 font-body text-[11px] text-neutral-600">Letras via LRCLIB · vídeos via YouTube IFrame API</footer>
+    </div>
+  );
+}
+
+ReactDOM.createRoot(document.getElementById("root")).render(<App/>);
+</script>
+</body>
+</html>
